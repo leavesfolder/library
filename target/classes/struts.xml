@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+    <constant name="struts.enable.DynamicMethodInvocation" value="false" />
+    <constant name="struts.devMode" value="true" />
+    <constant name="struts.custom.i18n.resources" value="app"></constant>
+    <package name="default" extends="struts-default">
+        <action name="upload" class="com.library.servlet.struts.uploadAction" method="execute">
+            <result>/html/strutsUpload.jsp</result>
+            <result name="input">/html/error.jsp</result>
+            <!--配置拦截器限制上传文件类型及大小-->
+            <interceptor-ref name="fileUpload">
+                <param name="allowedTypes">image/bmp,image/png,image/gif,image/jpg</param>
+                <param name="maximumSize">104856700</param>
+            </interceptor-ref>
+            <interceptor-ref name="defaultStack"></interceptor-ref>
+        </action>
+        <action name="download" class="com.library.servlet.struts.DownloadAction">
+            <param name="inputPath">/img/ImageUpload/kkx.png</param>
+            <result name="success" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">attachment;filename="${downloadFileName}"</param>
+                <param name="bufferSize">8192</param>
+            </result>
+        </action>
+        <action name="showPage" class="com.library.servlet.ckediter.CKfinder">
+            <result>/html/CKshow.jsp</result>
+        </action>
+    </package>
+
+    <!-- Add packages here -->
+
+</struts>

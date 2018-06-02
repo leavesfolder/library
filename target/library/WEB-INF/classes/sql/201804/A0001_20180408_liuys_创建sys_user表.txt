@@ -1,0 +1,22 @@
+
+INSERT INTO SYS_DBLOG(SID,STATUS)VALUES('A0001',0);
+COMMIT;
+#--------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `sys_user`;
+CREATE TABLE `sys_user` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '用户ID',
+  `email` varchar(255) NOT NULL COMMENT '用户邮箱',
+  `password` varchar(255) NOT NULL COMMENT '用户密码',
+  `username` varchar(255) NOT NULL COMMENT '用户昵称',
+  `role` varchar(255) NOT NULL COMMENT '用户身份',
+  `status` int(1) DEFAULT NULL COMMENT '用户状态',
+  `regTime` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '注册时间',
+  `regCityName` varchar(255) DEFAULT NULL COMMENT '注册城市名称',
+  `regCityCode` varchar(255) DEFAULT NULL COMMENT '注册城市代码',
+  `regIp` varchar(255) DEFAULT NULL COMMENT '注册IP',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email` (`email`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8;
+#------------------------------------------------------------------------------------------
+UPDATE SYS_DBLOG SET STATUS=1 WHERE SID='A0001';
+COMMIT;

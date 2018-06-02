@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.library.business.dao.IUserNoteDao" >
+  <resultMap id="BaseResultMap" type="com.library.business.model.UserNote" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="YHid" property="yhid" jdbcType="VARCHAR" />
+    <result column="YHXM" property="yhxm" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="body" property="body" jdbcType="VARCHAR" />
+    <result column="createTime" property="createtime" jdbcType="TIMESTAMP" />
+    <result column="lastModifyTime" property="lastmodifytime" jdbcType="TIMESTAMP" />
+    <result column="SCBZ" property="scbz" jdbcType="INTEGER" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    id, YHid, YHXM, title, body, createTime, lastModifyTime, SCBZ, type
+  </sql>
+  <sql id="queryWhere">
+    <if test="id!= null">
+        AND id= #{id , jdbcType=VARCHAR }
+    </if>
+    <if test="yhid!= null">
+        AND yhid= #{yhid , jdbcType=VARCHAR }
+    </if>
+    <if test="yhxm!= null">
+        AND yhxm= #{yhxm , jdbcType=VARCHAR }
+    </if>
+    <if test="title!= null">
+        AND title= #{title , jdbcType=VARCHAR }
+    </if>
+    <if test="body!= null">
+        AND body= #{body , jdbcType=VARCHAR }
+    </if>
+    <if test="createtime!= null">
+        AND createtime= #{createtime , jdbcType=TIMESTAMP }
+    </if>
+    <if test="lastmodifytime!= null">
+        AND lastmodifytime= #{lastmodifytime , jdbcType=TIMESTAMP }
+    </if>
+    <if test="type!= null">
+        AND type= #{type , jdbcType=VARCHAR }
+    </if>
+    <if test="scbz!= null">
+        AND scbz= #{scbz , jdbcType=INTEGER }
+    </if>
+  </sql>
+  <select id="selectByFilter" resultMap="BaseResultMap" parameterType="com.library.business.model.UserNote" >
+      SELECT <include refid="Base_Column_List"/> FROM user_note WHERE 1=1
+      <include refid="queryWhere"/>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_note
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user_note
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+
+  <insert id="insert" parameterType="com.library.business.model.UserNote" >
+    insert into user_note (id, YHid, YHXM, 
+      title, body, createTime, 
+      lastModifyTime, SCBZ, type
+      )
+    values (#{id,jdbcType=VARCHAR}, #{yhid,jdbcType=VARCHAR}, #{yhxm,jdbcType=VARCHAR}, 
+      #{title,jdbcType=VARCHAR}, #{body,jdbcType=VARCHAR}, #{createtime,jdbcType=TIMESTAMP}, 
+      #{lastmodifytime,jdbcType=TIMESTAMP}, #{scbz,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.library.business.model.UserNote" >
+    insert into user_note
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="yhid != null" >
+        YHid,
+      </if>
+      <if test="yhxm != null" >
+        YHXM,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="body != null" >
+        body,
+      </if>
+      <if test="createtime != null" >
+        createTime,
+      </if>
+      <if test="lastmodifytime != null" >
+        lastModifyTime,
+      </if>
+      <if test="scbz != null" >
+        SCBZ,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="yhid != null" >
+        #{yhid,jdbcType=VARCHAR},
+      </if>
+      <if test="yhxm != null" >
+        #{yhxm,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodifytime != null" >
+        #{lastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scbz != null" >
+        #{scbz,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.library.business.model.UserNote" >
+    update user_note
+    <set >
+      <if test="yhid != null" >
+        YHid = #{yhid,jdbcType=VARCHAR},
+      </if>
+      <if test="yhxm != null" >
+        YHXM = #{yhxm,jdbcType=VARCHAR},
+      </if>
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="body != null" >
+        body = #{body,jdbcType=VARCHAR},
+      </if>
+      <if test="createtime != null" >
+        createTime = #{createtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="lastmodifytime != null" >
+        lastModifyTime = #{lastmodifytime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="scbz != null" >
+        SCBZ = #{scbz,jdbcType=INTEGER},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.library.business.model.UserNote" >
+    update user_note
+    set YHid = #{yhid,jdbcType=VARCHAR},
+      YHXM = #{yhxm,jdbcType=VARCHAR},
+      title = #{title,jdbcType=VARCHAR},
+      body = #{body,jdbcType=VARCHAR},
+      createTime = #{createtime,jdbcType=TIMESTAMP},
+      lastModifyTime = #{lastmodifytime,jdbcType=TIMESTAMP},
+      SCBZ = #{scbz,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+</mapper>

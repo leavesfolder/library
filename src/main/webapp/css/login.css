@@ -1,0 +1,46 @@
+.head{
+    height: 50px;
+    background: #2aabd2;
+    text-align: center;
+}
+.div-page{
+    width: 400px;
+    margin: 60px auto 0;
+    text-align: center;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0 0 8px rgba(0,0,0,.1)
+}
+.inputBox{
+    width: 100%;
+    height: 50px;
+    margin-bottom: 0;
+    padding: 5px 12px 4px 3px;
+    border: 1px solid #c8c8c8;
+    border-radius: 0 0 4px 4px;
+    background-color: hsla(0,0%,71%,.1);
+    vertical-align: middle;
+}
+.inputBox input{
+    width: 80%;
+    height: 50px;
+    margin-bottom: 0;
+    padding: 0px 10px 0px 31px;
+    border: 0px solid #c8c8c8;
+    border-radius: 0 0 4px 4px;
+    background-color: hsla(0,0%,71%,.1);
+    vertical-align: middle
+}
+.btn-lg{
+    width: 100%;
+    border-radius: 23px;
+}
+.selectAct{
+    font-size: 26px;
+    font-weight: bold;
+    cursor: pointer;
+}
+.selectAct span:hover{
+    border-bottom:2px solid #428bca;
+    color:#428bca;
+}

@@ -1,0 +1,34 @@
+.ecsbox{
+    float: left;
+
+    margin: 0px 62px;
+
+    border: 20px solid #696;
+
+    padding: 60px 0;
+
+    text-align: center;
+
+    width: 500px;
+
+    -webkit-border-radius: 8px;
+
+    -moz-border-radius: 8px;
+
+    border-radius: 8px;
+
+    -webkit-box-shadow: #666 0px 0px 10px;
+
+    -moz-box-shadow: #666 0px 0px 10px;
+
+    box-shadow: #666 0px 0px 10px;background: #EEFF99;
+}
+.zztbox{
+
+    box-shadow: #666 0px 0px 10px;background: #fffcf6;
+}
+.chinaMap{
+    width: 100%;
+    text-align: center;
+    border: 50px solid rgba(102, 153, 102, 0);
+}

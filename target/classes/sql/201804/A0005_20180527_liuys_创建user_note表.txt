@@ -1,0 +1,21 @@
+
+INSERT INTO SYS_DBLOG(SID,STATUS)VALUES('A0005',0);
+COMMIT;
+#------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `user_note`;
+CREATE TABLE `user_note`
+(
+  `id`    VARCHAR(40)     NOT NULL,
+  `YHid`    VARCHAR(30) COMMENT '用户id',
+  `YHXM`    VARCHAR(150) COMMENT '用户姓名',
+  `title`  VARCHAR(200) COMMENT '文章标题',
+  `body`   blob COMMENT '文章内容',
+  `createTime`    timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `lastModifyTime`    timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '最后一次修改时间',
+  `SCBZ`   int(1) COMMENT '删除标志（1为删除）',
+  `type`   VARCHAR(200) COMMENT '文章类型（预留字段）',
+  PRIMARY KEY (`id`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+#-----------------------------------------------------------------------------------------
+UPDATE SYS_DBLOG SET STATUS=1 WHERE SID='A0005';
+COMMIT;

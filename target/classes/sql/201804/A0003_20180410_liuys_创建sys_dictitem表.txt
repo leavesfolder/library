@@ -1,0 +1,27 @@
+
+INSERT INTO SYS_DBLOG(SID,STATUS)VALUES('A0003',0);
+COMMIT;
+#------------------------------------------------------------------------------------------
+CREATE TABLE SYS_DICTITEM
+(
+  ID           VARCHAR(32),
+  CODE         VARCHAR(75)                NOT NULL,
+  NAME         VARCHAR(300)               NOT NULL,
+  GROUPID      VARCHAR(32)   NOT NULL COMMENT '属组id',
+  GROUPNAME    VARCHAR(300) COMMENT '属组名称',
+  LEVELID      VARCHAR(32)  COMMENT '层级',
+  ISPARENT     VARCHAR(15)  COMMENT '是否是父节点',
+  LRR          VARCHAR(75)  NOT NULL COMMENT '录入人',
+  LRSJ        timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '录入时间',
+  GXR          VARCHAR(75)  COMMENT '改写人',
+  GXSJ         timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '改写时间',
+  SCBZ         int(2)       DEFAULT 0 COMMENT '删除标志',
+  PID          VARCHAR(50) COMMENT '父节点的id',
+  DESCRIPTION  VARCHAR(750) COMMENT '描述',
+  SFQYBM   VARCHAR(1)     DEFAULT 0 COMMENT '是否启用别名',
+  BM       VARCHAR(300) COMMENT '别名',
+  PRIMARY KEY (`ID`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+#-----------------------------------------------------------------------------------------
+UPDATE SYS_DBLOG SET STATUS=1 WHERE SID='A0003';
+COMMIT;

@@ -1,0 +1,20 @@
+
+INSERT INTO SYS_DBLOG(SID,STATUS)VALUES('A0002',0);
+COMMIT;
+#------------------------------------------------------------------------------------------
+DROP TABLE IF EXISTS `sys_login_log`;
+CREATE TABLE `SYS_LOGIN_LOG`
+(
+  `XXBH`    VARCHAR(40)     NOT NULL,
+  `RZSJ`    timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '日志时间',
+  `YHid`    VARCHAR(20) COMMENT '用户id',
+  `YHXM`    VARCHAR(150) COMMENT '用户姓名',
+  `regCityCode`  VARCHAR(20) COMMENT '注册城市代码',
+  `regCityName`  VARCHAR(300) COMMENT '注册城市名称',
+  `SCBZ`   int(1) COMMENT '删除标志（1为删除）',
+  `IP`      VARCHAR(100) COMMENT 'ip',
+  PRIMARY KEY (`XXBH`)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+#-----------------------------------------------------------------------------------------
+UPDATE SYS_DBLOG SET STATUS=1 WHERE SID='A0002';
+COMMIT;

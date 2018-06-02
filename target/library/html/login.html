@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+    <link href="../css/common/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/common/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="../css/login.css" rel="stylesheet">
+    <link href="../font/iconfont.css" rel="stylesheet">
+    <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+    <script type="text/javascript" src="../js/common/jQuery/jquery.js"></script>
+    <script type="text/javascript" src="../js/common/jQuery/jquery.form.js"></script>
+    <script type="text/javascript" src="../js/common/bootstrap/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/common/common_js.js"></script>
+</head>
+<body>
+<div>
+    <div class="head">
+
+    </div>
+    <div class="div-page">
+        <div class="selectAct">
+            <span onclick="selectAct('login');">登陆</span>&nbsp;&nbsp;·&nbsp;
+            <span onclick="selectAct('register');">注册</span>
+        </div>
+        <br/>
+        <div  class="login">
+                <div class="inputBox">
+                    <i class="iconfont icon-yonghu"></i>
+                    <input placeholder="手机号或邮箱" type="text" name="username">
+
+                </div>
+                <div class="inputBox">
+                    <i class="iconfont icon-mima"></i>
+                    <input placeholder="密码" type="password" name="password">
+                </div>
+                <br/>
+                <div>
+                    <button class="btn-primary btn-lg"  type="button" onclick="login();">
+                        登录
+                    </button>
+                </div>
+        </div>
+        <div class="register" style="display: none;">
+                <div style="display: none;">
+                    <input name="regIp" id ="regIp">
+                    <input name="regCityCode" id="regCityCode">
+                    <input name="regCityName" id="regCityName">
+                </div>
+                <div class="inputBox">
+                    <i class="iconfont icon-yonghu"></i>
+                    <input placeholder="昵称"  type="text" name="username">
+
+
+                </div>
+                <div class="inputBox">
+                    <i class="iconfont icon-iphone"></i>
+                    <input placeholder="手机号或邮箱"  type="text" name="email">
+                </div>
+                <div class="inputBox">
+                    <i class="iconfont icon-mima"></i>
+                    <input placeholder="密码" type="password" name="password">
+                </div>
+                <br/>
+                <div>
+                    <button class="btn-danger btn-lg"  type="button" onclick="register()">
+                        注册
+                    </button>
+                </div>
+
+        </div>
+
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        var param = GetQueryString();
+        var type = param["type"];
+        if("register"==type){
+            selectAct('register');
+        }
+
+    })
+    function selectAct(str){
+        console.log(str);
+        if(str=="login"){
+            $(".register").hide(1);
+            $(".login").show(500);
+        }else if(str=="register"){
+            $(".login").hide(1);
+            $(".register").show(500);
+        }
+    }
+    function login(){
+        var username = $("input[name='username']").val();
+        var password = $("input[name='password']").val();
+        $.ajax({
+            url:"/library/autoEntry/User/queryUser",
+            data:{username:username,password:password},
+            type:"post",
+            success:function (data) {
+              console.log(data);
+              console.log(data.status);
+              if (data.status){
+                  window.open("index.html");
+              }else{
+                  window.open("../common/error.html");
+              }
+
+            }
+        });
+    }
+    function getIPs(callback){
+        var ip_dups = {};
+
+        //compatibility for firefox and chrome
+        var RTCPeerConnection = window.RTCPeerConnection|| window.mozRTCPeerConnection|| window.webkitRTCPeerConnection;
+        var mediaConstraints = {
+            optional: [{RtpDataChannels: true}]
+        };
+
+        //firefox already has a default stun server in about:config
+        //    media.peerconnection.default_iceservers =
+        //    [{"url": "stun:stun.services.mozilla.com"}]
+        var servers = undefined;
+
+        //add same stun server for chrome
+        if(window.webkitRTCPeerConnection)
+            servers = {iceServers: [{urls: "stun:stun.services.mozilla.com"}]};
+
+        //construct a new RTCPeerConnection
+        var pc = new RTCPeerConnection(servers, mediaConstraints);
+
+        //listen for candidate events
+        pc.onicecandidate = function(ice){
+
+            //skip non-candidate events
+            if(ice.candidate){
+
+                //match just the IP address
+                var ip_regex = /([0-9]{1,3}(\.[0-9]{1,3}){3})/
+                var ip_addr = ip_regex.exec(ice.candidate.candidate)[1];
+
+                //remove duplicates
+                if(ip_dups[ip_addr] === undefined)
+                    callback(ip_addr);
+
+                ip_dups[ip_addr] = true;
+            }
+        };
+
+        //create a bogus data channel
+        pc.createDataChannel("");
+
+        //create an offer sdp
+        pc.createOffer(function(result){
+
+            //trigger the stun server request
+            pc.setLocalDescription(result, function(){});
+
+        }, function(){});}
+    //Test: Print the IP addresses into the console
+    getIPs(function(ip){
+        $("#regIp").val(ip);
+        $("#regCityCode").val(returnCitySN.cid);
+        $("#regCityName").val(returnCitySN.cname);
+    });
+
+    function register() {
+        var jsonArr = [];
+        $(".register").each(function () {
+            var jsonObj = {};
+            $(this).find("input").each(function (i) {
+                var name = $(this).attr("name");
+                var value = $(this).val();
+                jsonObj[name] = value;
+                console.log(name+";"+value);
+            })
+            jsonArr.push(jsonObj);
+        });
+        $.ajax({
+            url:"/library/autoEntry/User/addUser",
+            data:{"userDetail":JSON.stringify(jsonArr)},
+            type:"post",
+            success:function (data) {
+                console.log(data);
+                console.log(data.status);
+                if (data.status){
+                    window.open("index.html");
+                }else{
+                    window.open("../common/error.html");
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

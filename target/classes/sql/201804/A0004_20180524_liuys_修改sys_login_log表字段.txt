@@ -1,0 +1,11 @@
+
+INSERT INTO SYS_DBLOG(SID,STATUS)VALUES('A0004',0);
+COMMIT;
+#------------------------------------------------------------------------------------------
+#考虑到登录日志的实时性，所以现调整Sys_login_log表的两个字段，将注册城市代码和名称改为登录城市代码和名称
+alter table SYS_LOGIN_LOG change column regCityCode CityCode VARCHAR(20);
+alter table SYS_LOGIN_LOG change column regCityName CityName VARCHAR(300);
+
+#-----------------------------------------------------------------------------------------
+UPDATE SYS_DBLOG SET STATUS=1 WHERE SID='A0004';
+COMMIT;

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.library.user.dao.ISysLoginLogDao" >
+  <resultMap id="BaseResultMap" type="com.library.user.model.SysLoginLog" >
+    <id column="XXBH" property="xxbh" jdbcType="VARCHAR" />
+    <result column="RZSJ" property="rzsj" jdbcType="TIMESTAMP" />
+    <result column="YHid" property="yhid" jdbcType="VARCHAR" />
+    <result column="YHXM" property="yhxm" jdbcType="VARCHAR" />
+    <result column="citycode" property="citycode" jdbcType="VARCHAR" />
+    <result column="cityname" property="cityname" jdbcType="VARCHAR" />
+    <result column="SCBZ" property="scbz" jdbcType="INTEGER" />
+    <result column="IP" property="ip" jdbcType="VARCHAR" />
+    <result column="role" property="role" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="queryWhere" >
+    <where >
+      <if test="xxbh != null" >
+        AND XXBH = #{xxbh,jdbcType=VARCHAR}
+      </if>
+      <if test="rzsj != null" >
+        AND RZSJ = #{rzsj,jdbcType=TIMESTAMP}
+      </if>
+      <if test="yhid != null" >
+        AND YHid = #{yhid,jdbcType=VARCHAR}
+      </if>
+      <if test="yhxm != null" >
+        AND YHXM = #{yhxm,jdbcType=VARCHAR}
+      </if>
+      <if test="citycode != null" >
+        AND citycode = #{citycode,jdbcType=VARCHAR}
+      </if>
+      <if test="cityname != null" >
+        AND cityname = #{cityname,jdbcType=VARCHAR}
+      </if>
+      <if test="scbz != null" >
+        AND SCBZ = #{scbz,jdbcType=INTEGER}
+      </if>
+      <if test="ip != null" >
+        AND IP = #{ip,jdbcType=VARCHAR}
+      </if>
+      <if test="role != null" >
+        AND role = #{role,jdbcType=VARCHAR}
+      </if>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    XXBH, RZSJ, YHid, YHXM, citycode, cityname, SCBZ, IP, role
+  </sql>
+  <select id="selectBySysLogin" resultMap="BaseResultMap" parameterType="com.library.user.model.SysLoginLog" >
+    select
+    <include refid="Base_Column_List" />
+    from sys_login_log
+      <include refid="queryWhere" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_login_log
+    where XXBH = #{xxbh,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from sys_login_log
+    where XXBH = #{xxbh,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.library.user.model.SysLoginLog" >
+    insert into sys_login_log (XXBH, RZSJ, YHid, 
+      YHXM, citycode, cityname, 
+      SCBZ, IP, role)
+    values (#{xxbh,jdbcType=VARCHAR}, #{rzsj,jdbcType=TIMESTAMP}, #{yhid,jdbcType=VARCHAR}, 
+      #{yhxm,jdbcType=VARCHAR}, #{citycode,jdbcType=VARCHAR}, #{cityname,jdbcType=VARCHAR}, 
+      #{scbz,jdbcType=INTEGER}, #{ip,jdbcType=VARCHAR}, #{role,jdbcType=VARCHAR})
+  </insert>
+
+</mapper>

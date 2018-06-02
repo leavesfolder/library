@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>上传图片</title>
+    <link href="../css/common/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/common/bootstrap-theme.min.css" rel="stylesheet">
+    <script type="text/javascript" src="../js/common/jQuery/jquery.js"></script>
+    <script type="text/javascript" src="../js/common/jQuery/jquery.form.js"></script>
+    <script type="text/javascript" src="../js/common/bootstrap/bootstrap.min.js"></script>
+    <style>
+        .imgUpload{
+            width: auto;
+            margin:0 auto;
+        }
+
+        .previewImg img{
+            width: auto;
+            height: 150px;
+        }
+        .thumbnail{
+            padding: 30px 265px;
+            height: 400px;
+            width: 800px;
+            display:flex;
+            justify-content:center;// 内容水平居中
+            align-items:center; //内容垂直居中
+        }
+        .imgBox{
+            width: 160px;
+            height: 260px;
+            margin: 0 20px;
+            border: 4px dashed;
+        }
+        .imgBox img{
+            width: auto;
+            height: 200px;
+            cursor: pointer;
+            padding-top: 22px;
+        }
+        .showImg{
+            border: 5px solid;
+            width: 757px;
+            margin-left: 283px;
+            box-shadow: 0 0 60px #9E9E9E
+        }
+        .showImg img{
+            width: auto;
+            height: 400px;
+            padding: 20px;
+        }
+        .large img{
+
+        }
+    </style>
+</head>
+<body style="text-align:center;">
+<div>
+    
+</div>
+<div class="imgUpload">
+    <div class="previewImg">
+
+        <img id="previewImg" src="../img/ImageUpload/yulan.png">
+        <div id="large" style="position: absolute;
+    top: -80px; left: 70px;"></div>
+        <form  action="uploadServlet.do" method="post" enctype="multipart/form-data">
+            请选择图片<input id="myfile" name = "myfile" type="file" >
+            <input type="submit" value="提交">${result
+            }</input>
+        </form>
+
+
+
+
+
+        下载<a href="downloadServlet.do?filename=kkx2.png">卡卡西帅照</a>
+
+        <br>
+
+
+
+    </div>
+    <div class="showImg">
+        <img id="showImg" src="../img/ImageUpload/xiaoyin.png">
+    </div>
+    <div class="thumbnail">
+        <div class="imgBox">
+            <img src="../img/ImageUpload/lw.png">
+        </div>
+        <div class="imgBox">
+            <img src="../img/ImageUpload/xiaoyin.png">
+        </div>
+        <div class="imgBox">
+            <img src="../img/ImageUpload/kkx.png">
+        </div>
+        <div class="imgBox">
+            <img src="../img/ImageUpload/chutian.png">
+        </div>
+    </div>
+
+</div>
+<script type="text/javascript">
+    $(function () {
+        $(".thumbnail div img").click(function () {
+            console.log(1);
+           var str = $(this).attr("src");
+           console.log(str);
+           $("#showImg").attr({src:str});
+            
+        });
+       var la = $("#large");
+       var key = false;
+       $("#previewImg").mousemove(function (e) {
+           la.css({
+               top:e.pageY,
+               left:e.pageX
+           }).html("<img src='"+this.src+"'/>").show();
+           key = true;
+
+       });
+       $("#previewImg").mouseout(function (e) {
+           console.log(key);
+           if(key){
+               la.hide();
+           }
+       })
+    })
+    $("#myfile").change(function () {
+        //$("#previewImg").attr("src","file:///"+$("#myfile").val());
+       // console.log(obj);
+        var file = this.files[0];
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function (e) {
+            $("#previewImg").attr({src:e.target.result});
+        }
+    });
+
+
+
+</script>
+
+</body>
+</html>
