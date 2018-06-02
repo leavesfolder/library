@@ -85,6 +85,7 @@ public class UserController {
             session.removeAttribute(name);
             System.out.println("分支测试");
 
+
         }
         return new ResultModel(true);
     }
