@@ -96,7 +96,7 @@
         var username = $("input[name='username']").val();
         var password = $("input[name='password']").val();
         $.ajax({
-            url:"/library/autoEntry/User/queryUser",
+            url:"/library/autoEntry/User/queryUser.do",
             data:{username:username,password:password},
             type:"post",
             success:function (data) {
@@ -180,7 +180,7 @@
             jsonArr.push(jsonObj);
         });
         $.ajax({
-            url:"/library/autoEntry/User/addUser",
+            url:"/library/autoEntry/User/addUser.do",
             data:{"userDetail":JSON.stringify(jsonArr)},
             type:"post",
             success:function (data) {

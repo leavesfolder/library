@@ -37,11 +37,6 @@ public class LogAop {
             }else{
                 System.out.println("用户未登录");
             }
-
-
-
-
-
             System.out.println("AOP正常结束");
             return obj;
         }catch (Throwable e){

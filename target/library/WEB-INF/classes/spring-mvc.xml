@@ -33,8 +33,7 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <!--默认拦截的链接-->
-            <mvc:mapping path="/html/*"/>
-            <mvc:mapping path="/html/*.jsp"/>
+            <mvc:mapping path="/*.do"/>
             <!-- 但是排除下面这些，也就是不拦截请求 -->
             <mvc:exclude-mapping path="/html/error.jsp"/>
             <mvc:exclude-mapping path="/html/welcome.html"/>

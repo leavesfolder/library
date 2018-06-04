@@ -23,7 +23,7 @@ public class UserNoteController {
     @Autowired
     private IUserNoteService userNoteService;
 
-    @RequestMapping(value = "queryUserNote",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "queryUserNote.do",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public ResultModel getNoteByUserid(UserNote userNote){
         boolean key = true;
@@ -35,7 +35,7 @@ public class UserNoteController {
         return new ResultModel(key,noteList);
     }
 
-    @RequestMapping(value = "insertUserNote",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "insertUserNote.do",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public ResultModel addNote(@Valid UserNote userNote){
         System.out.println(userNote);
@@ -48,7 +48,7 @@ public class UserNoteController {
         return new ResultModel(flag);
     }
 
-    @RequestMapping(value = "updateUserNote",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "updateUserNote.do",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public ResultModel updateNote(@Valid UserNote userNote){
         System.out.println(userNote.getBody());

@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.sql.Timestamp;
 import java.util.Date;
@@ -31,9 +33,9 @@ import java.util.UUID;
 public class UserController {
     @Autowired
     private IUserService userService;
-    @RequestMapping(value = "queryUser",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "queryUser.do",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public ResultModel queryUser(HttpServletRequest request, String username, String password){
+    public ResultModel queryUser(HttpServletRequest request,HttpServletResponse response, String username, String password){
         User user = new User();
         user.setUsername(username);
         user.setPassword(EncryptUtil.encode(password));
@@ -43,11 +45,18 @@ public class UserController {
         if(old!=null){
             key = true;
             request.getSession().setAttribute("user",old);
+            //设置cookie
+            String userAgent = request.getHeader("User-Agent");
+            long now = System.currentTimeMillis();
+            String token = EncryptUtil.encode(userAgent + now);
+            Cookie cookie = new Cookie("token", now + "|" + token);
+            cookie.setPath("/");
+            response.addCookie(cookie);
         }
         return new ResultModel(key,old);
     }
 
-    @RequestMapping(value = "addUser",method = {RequestMethod.GET,RequestMethod.POST})
+    @RequestMapping(value = "addUser.do",method = {RequestMethod.GET,RequestMethod.POST})
     @ResponseBody
     public ResultModel addUser(String userDetail){
         System.out.println(userDetail);
@@ -74,19 +83,19 @@ public class UserController {
     /**
      * 退出功能
      */
-    @RequestMapping(value = "loginOut",method = {RequestMethod.POST,RequestMethod.GET})
+    @RequestMapping(value = "loginOut.do",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
-    public ResultModel loginOut(){
+    public ResultModel loginOut(HttpServletResponse response){
         HttpSession  session= HttpUtil.getSession();
         Enumeration enu= session.getAttributeNames();
         while (enu.hasMoreElements()){
             String name = (String) enu.nextElement();
-            System.out.println("退出："+name);
             session.removeAttribute(name);
-            System.out.println("分支测试");
-
-
         }
+        Cookie cookie = new Cookie("token", null);
+        cookie.setMaxAge(-1);//删除cookie
+        cookie.setPath("/");
+        response.addCookie(cookie);
         return new ResultModel(true);
     }
 

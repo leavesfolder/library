@@ -23,7 +23,7 @@ function toLoginOut(){
     },function (flag) {
         if (flag){
             $.ajax({
-                url:"/library/autoEntry/User/loginOut",
+                url:"/library/autoEntry/User/loginOut.do",
                 dataType:"json",
                 type:"POST",
                 success:function (data) {

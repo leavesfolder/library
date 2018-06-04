@@ -1,0 +1,8 @@
+
+INSERT INTO SYS_DBLOG(SID,STATUS)VALUES('A0006',0);
+COMMIT;
+#------------------------------------------------------------------------------------------
+alter table sys_user modify column id varchar(30);
+#-----------------------------------------------------------------------------------------
+UPDATE SYS_DBLOG SET STATUS=1 WHERE SID='A0006';
+COMMIT;

@@ -92,7 +92,7 @@
     function toSaveUserNote() {
         CKupdate();
         $.ajax({
-            url:"/library/autoEntry/UserNote/insertUserNote",
+            url:"/library/autoEntry/UserNote/insertUserNote.do",
             dataType:"json",
             type:"POST",
             data:$("form[name='UserNoteForm']").serialize(),
@@ -117,7 +117,7 @@
         $(".save").hide();
         $(".update").hide();
         $.ajax({
-            url: "/library/autoEntry/UserNote/queryUserNote",
+            url: "/library/autoEntry/UserNote/queryUserNote.do",
             dataType: "json",
             type: "POST",
             data: {id: id},
@@ -137,7 +137,7 @@
         $(".update").show();
         //编辑日志首先需要回填日志
         $.ajax({
-            url: "/library/autoEntry/UserNote/queryUserNote",
+            url: "/library/autoEntry/UserNote/queryUserNote.do",
             dataType: "json",
             type: "POST",
             data: {id: id},
@@ -158,7 +158,7 @@
         console.log("进入更新");
         CKupdate();
         $.ajax({
-            url:"/library/autoEntry/UserNote/updateUserNote",
+            url:"/library/autoEntry/UserNote/updateUserNote.do",
             dataType:"json",
             type:"POST",
             data:$("form[name='UserNoteForm']").serialize(),
@@ -180,7 +180,7 @@
         },function(flag){
             if(flag){
                 $.ajax({
-                    url:"/library/autoEntry/UserNote/updateUserNote",
+                    url:"/library/autoEntry/UserNote/updateUserNote.do",
                     dataType:"json",
                     type:"POST",
                     data:{id:id,scbz:1},
@@ -200,7 +200,7 @@
     //日志列表
     function queryAllNote(yhid) {
         $.ajax({
-            url:"/library/autoEntry/UserNote/queryUserNote",
+            url:"/library/autoEntry/UserNote/queryUserNote.do",
             dataType:"json",
             type:"POST",
             data:{yhid:yhid},
