@@ -83,7 +83,8 @@ public class UserController {
             String name = (String) enu.nextElement();
             System.out.println("退出："+name);
             session.removeAttribute(name);
-            System.out.println("一次测试");
+            System.out.println("分支测试");
+
 
         }
         return new ResultModel(true);
