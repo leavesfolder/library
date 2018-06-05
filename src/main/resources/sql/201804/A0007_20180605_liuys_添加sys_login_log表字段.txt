@@ -1,0 +1,8 @@
+
+INSERT INTO SYS_DBLOG(SID,STATUS)VALUES('A0007',0);
+COMMIT;
+#------------------------------------------------------------------------------------------
+alter table sys_login_log add role varchar(2);
+#-----------------------------------------------------------------------------------------
+UPDATE SYS_DBLOG SET STATUS=1 WHERE SID='A0007';
+COMMIT;

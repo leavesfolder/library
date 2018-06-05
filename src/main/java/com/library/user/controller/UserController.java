@@ -44,16 +44,22 @@ public class UserController {
         boolean key = false;
         if(old!=null){
             key = true;
-            request.getSession().setAttribute("user",old);
-            //设置cookie
-            String userAgent = request.getHeader("User-Agent");
-            long now = System.currentTimeMillis();
-            String token = EncryptUtil.encode(userAgent + now);
-            Cookie cookie = new Cookie("token", now + "|" + token);
-            cookie.setPath("/");
-            response.addCookie(cookie);
+            setCookieAndSession(old);
         }
         return new ResultModel(key,old);
+    }
+
+    public static void setCookieAndSession(User user){
+        HttpServletRequest request = HttpUtil.getReq();
+        HttpServletResponse response = HttpUtil.getResp();
+        request.getSession().setAttribute("user",user);
+        //设置cookie
+        String userAgent = request.getHeader("User-Agent");
+        long now = System.currentTimeMillis();
+        String token = EncryptUtil.encode(userAgent + now);
+        Cookie cookie = new Cookie("token", now + "|" + token);
+        cookie.setPath("/");
+        response.addCookie(cookie);
     }
 
     @RequestMapping(value = "addUser.do",method = {RequestMethod.GET,RequestMethod.POST})
@@ -74,6 +80,9 @@ public class UserController {
                     user.setId(SequenceUtil.getNextXxzjbh());
                     user.setPassword(EncryptUtil.encode(user.getPassword()));
                     key = userService.addUser(user);
+                    if (key){
+                        setCookieAndSession(user);
+                    }
                 }
             }
         }

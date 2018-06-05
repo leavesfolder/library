@@ -38,9 +38,6 @@ public class UserNoteController {
     @RequestMapping(value = "insertUserNote.do",method = {RequestMethod.POST,RequestMethod.GET})
     @ResponseBody
     public ResultModel addNote(@Valid UserNote userNote){
-        System.out.println(userNote);
-        System.out.println(userNote.getTitle());
-        System.out.println(userNote.getBody());
         userNote.setId(SequenceUtil.getNextXxzjbh());
         userNote.setCreatetime(new Date());
         userNote.setScbz(0);
