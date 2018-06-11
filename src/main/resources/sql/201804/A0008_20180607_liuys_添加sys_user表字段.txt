@@ -1,0 +1,8 @@
+
+INSERT INTO SYS_DBLOG(SID,STATUS)VALUES('A0008',0);
+COMMIT;
+#------------------------------------------------------------------------------------------
+alter table sys_user add phone varchar(255) NOT NULL;
+#-----------------------------------------------------------------------------------------
+UPDATE SYS_DBLOG SET STATUS=1 WHERE SID='A0008';
+COMMIT;

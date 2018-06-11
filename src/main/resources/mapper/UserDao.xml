@@ -4,6 +4,7 @@
     <sql id="Base_Column_List">
         id,
         email,
+        phone,
         password,
         username,
         role,
@@ -16,6 +17,9 @@
     <sql id="queryWhere">
         <if test="email!= null">
             AND email= #{email , jdbcType=VARCHAR }
+        </if>
+        <if test="phone!= null">
+            AND phone= #{phone , jdbcType=VARCHAR }
         </if>
         <if test="password!= null">
             AND password= #{password , jdbcType=VARCHAR }
@@ -53,6 +57,7 @@
         )VALUES (
         #{id , jdbcType=VARCHAR },
         #{email , jdbcType=VARCHAR },
+        #{phone , jdbcType=VARCHAR },
         #{password , jdbcType=VARCHAR },
         #{username , jdbcType=VARCHAR },
         #{role , jdbcType=VARCHAR },

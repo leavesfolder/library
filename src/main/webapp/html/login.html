@@ -7,11 +7,13 @@
     <link href="../css/common/bootstrap-theme.min.css" rel="stylesheet">
     <link href="../css/login.css" rel="stylesheet">
     <link href="../font/iconfont.css" rel="stylesheet">
+    <link href="../css/common/jquery.alert.css" rel="stylesheet">
     <script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
     <script type="text/javascript" src="../js/common/jQuery/jquery.js"></script>
     <script type="text/javascript" src="../js/common/jQuery/jquery.form.js"></script>
     <script type="text/javascript" src="../js/common/bootstrap/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/common/common_js.js"></script>
+    <script type="text/javascript" src="../js/common/jQuery/jquery.alert.js"></script>
 </head>
 <body>
 <div>
@@ -25,16 +27,29 @@
         </div>
         <br/>
         <div  class="login">
+            <form name="loginForm" action="" enctype="multipart/form-data">
+                <div style="display: none;">
+                    <input name="regIp" class="regIp" type="text">
+                    <input name="regCityCode" class="regCityCode" type="text">
+                    <input name="regCityName" class="regCityName" type="text">
+                </div>
                 <div class="inputBox">
-                    <i class="iconfont icon-yonghu"></i>
-                    <input placeholder="手机号或邮箱" type="text" name="username">
-
+                    <i class="iconfont icon-user"></i>
+                    <input placeholder="手机或者邮箱" onchange="inputCheck(this,'emiORpho','logMessage','login');" type="text" name="emiORpho">
                 </div>
                 <div class="inputBox">
                     <i class="iconfont icon-mima"></i>
                     <input placeholder="密码" type="password" name="password">
                 </div>
+                <div class="inputBox">
+                    <i class="iconfont icon-yanzhengmaicon"></i>
+                    <input placeholder="验证码" type="text" name="code">
+                    <img src="/library/autoEntry/User/code.do" title="点击刷新" id="codeImg" class="codeImg">
+                </div>
                 <br/>
+                 <span class="message" id="logMessage"></span>
+                <br/>
+            </form>
                 <div>
                     <button class="btn-primary btn-lg"  type="button" onclick="login();">
                         登录
@@ -43,24 +58,33 @@
         </div>
         <div class="register" style="display: none;">
                 <div style="display: none;">
-                    <input name="regIp" id ="regIp">
-                    <input name="regCityCode" id="regCityCode">
-                    <input name="regCityName" id="regCityName">
+                    <input name="regIp" class="regIp" type="text">
+                    <input name="regCityCode" class="regCityCode" type="text">
+                    <input name="regCityName" class="regCityName" type="text">
                 </div>
                 <div class="inputBox">
-                    <i class="iconfont icon-yonghu"></i>
+                    <i class="iconfont icon-user"></i>
                     <input placeholder="昵称"  type="text" name="username">
-
-
                 </div>
                 <div class="inputBox">
-                    <i class="iconfont icon-iphone"></i>
-                    <input placeholder="手机号或邮箱"  type="text" name="email">
+                    <i class="iconfont icon-phone"></i>
+                    <input placeholder="手机号" onchange="inputCheck(this,'phone','regMessage','register');" type="text" name="phone">
+                </div>
+                <div class="inputBox">
+                    <i class="iconfont icon-email"></i>
+                    <input placeholder="邮箱"  onchange="inputCheck(this,'email','regMessage','register');" type="text" name="email">
                 </div>
                 <div class="inputBox">
                     <i class="iconfont icon-mima"></i>
                     <input placeholder="密码" type="password" name="password">
                 </div>
+                <div class="inputBox">
+                    <i class="iconfont icon-yanzhengmaicon"></i>
+                    <input placeholder="验证码" type="text" name="code">
+                    <img src="/library/autoEntry/User/code.do" title="点击刷新" class="codeImg">
+                </div>
+                <br/>
+                <span class="message" id="regMessage"></span>
                 <br/>
                 <div>
                     <button class="btn-danger btn-lg"  type="button" onclick="register()">
@@ -80,10 +104,21 @@
         if("register"==type){
             selectAct('register');
         }
-
-    })
+        $(".codeImg").click(function(){
+            var url="/library/autoEntry/User/code.do?"+Math.random();
+            //刷新验证码时，及时清空出错提示，为准确考虑，增加判断
+            var logMessage = $("#logMessage").html();
+            var regMessage = $("#regMessage").html();
+            if(logMessage=="验证码出错！"){
+                $("#logMessage").html("");
+            }
+            if(regMessage=="验证码出错！"){
+                $("#regMessage").html("");
+            }
+            $(this).attr('src', url);
+        });
+    });
     function selectAct(str){
-        console.log(str);
         if(str=="login"){
             $(".register").hide(1);
             $(".login").show(500);
@@ -92,20 +127,64 @@
             $(".register").show(500);
         }
     }
+    function invalid(flag) {
+        var password = $("."+flag+" input[name='password']").val();
+        var code = $("."+flag+" input[name='code']").val();
+        if (flag==="register"){
+            var username = $("."+flag+" input[name='username']").val();
+            var email = $(".register input[name='email']").val();
+            var phone = $(".register input[name='phone']").val();
+            if(email==""){
+                invalidMess(".register input[name='email']","邮箱");
+                return false;
+                //18392961171
+            }
+            if(phone==""){
+                invalidMess(".register input[name='phone']","手机号");
+                return false;
+            }
+            if(username==""){
+                invalidMess("."+flag+" input[name='username']","用户名");
+                return false;
+            }
+        }else{
+            var emiORpho = $("."+flag+" input[name='emiORpho']").val();
+            if(emiORpho==""){
+                invalidMess("."+flag+" input[name='emiORpho']","邮箱或者手机号");
+                return false;
+            }
+        }
+
+        if(password==""){
+            invalidMess("."+flag+" input[name='password']","密码");
+            return false;
+        }
+        if(code==""){
+            invalidMess("."+flag+" input[name='code']","验证码");
+            $(".codeImg").click();
+            return false;
+        }
+        return true;
+    }
     function login(){
-        var username = $("input[name='username']").val();
-        var password = $("input[name='password']").val();
+        if(!invalid("login")){
+            return;
+        };
+        var logMessage = $("#logMessage").html();
+        if(logMessage!=""){
+            return;
+        }
         $.ajax({
             url:"/library/autoEntry/User/queryUser.do",
-            data:{username:username,password:password},
+            data:$("form[name='loginForm']").serialize(),
             type:"post",
             success:function (data) {
-              console.log(data);
-              console.log(data.status);
               if (data.status){
-                  window.open("index.html");
+                  window.location.href="index.html";
               }else{
-                  window.open("../common/error.html");
+                  console.log("登录出错");
+                  $(".codeImg").click();
+                  $("#logMessage").html(data.message);
               }
 
             }
@@ -162,12 +241,43 @@
         }, function(){});}
     //Test: Print the IP addresses into the console
     getIPs(function(ip){
-        $("#regIp").val(ip);
-        $("#regCityCode").val(returnCitySN.cid);
-        $("#regCityName").val(returnCitySN.cname);
+        $(".regIp").val(ip);
+        $(".regCityCode").val(returnCitySN.cid);
+        $(".regCityName").val(returnCitySN.cname);
     });
 
+    //为了进一步提高用户体验，现采用onblur事件去检测邮箱和手机号的合理性验证
+    //当鼠标离开输入框，即进行合理性验证
+    function inputCheck(obj,type,messId,divType){
+        var inpValue = obj.value;
+        var reg = "",messValue = "";
+        if(inpValue.indexOf("@")!=-1){
+            reg=/^[a-zA-Z0-9_.-]+@[a-zA-Z0-9-]+(\.[a-zA-Z0-9-]+)*\.[a-zA-Z0-9]{2,6}$/;
+            messValue = "邮箱";
+        }else{
+            reg=/^1[3|4|5|8][0-9]\d{4,8}$/;
+            messValue = "手机号";
+        }
+        if (!(reg.test(inpValue))){
+            $("#"+messId).html("请输入正确的"+messValue+"!");
+            $("."+divType+" input[name='"+type+"']").addClass("invalid");
+            return;
+        }else{
+            $("#"+messId).html("");
+            $("."+divType+" input[name='"+type+"']").removeClass("invalid");
+            return;
+        }
+    }
+
+
     function register() {
+        if(!invalid("register")){
+            return;
+        }
+        var regMessage = $("#regMessage").html();
+        if(regMessage!=""){
+            return;
+        }
         var jsonArr = [];
         $(".register").each(function () {
             var jsonObj = {};
@@ -187,9 +297,11 @@
                 console.log(data);
                 console.log(data.status);
                 if (data.status){
-                    window.open("index.html");
+                    window.location.href="index.html";
                 }else{
-                    window.open("../common/error.html");
+                    console.log("注册出错");
+                    $(".codeImg").click();
+                    $("#regMessage").html(data.message);
                 }
             }
         });

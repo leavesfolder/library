@@ -36,7 +36,9 @@ function toLoginOut(){
         }
 
     })
+}
 
-
-
+/**必填项验证*/
+function invalidMess(id,type){
+    $(id).attr("placeholder",type+"不能为空!").addClass("invalid");
 }

@@ -5,7 +5,7 @@
 }
 .div-page{
     width: 400px;
-    margin: 60px auto 0;
+    margin: 40px auto 0;
     text-align: center;
     padding: 50px;
     border-radius: 10px;
@@ -43,4 +43,42 @@
 .selectAct span:hover{
     border-bottom:2px solid #428bca;
     color:#428bca;
+}
+.message{
+    position: relative;
+    color: red;
+    top: -10px;
+}
+
+.invalid:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+    color: red;
+}
+
+.invalid::-moz-placeholder { /* Mozilla Firefox 19+ */
+    color: red;
+}
+
+input.invalid:-ms-input-placeholder{
+    color: red;
+}
+
+input.invalid::-webkit-input-placeholder {
+    color: red;
+}
+.inputBox>.invalid{
+    border: 1px red solid;
+    color: red;
+}
+.icon {
+    width: 1em; height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+}
+.codeImg{
+    box-shadow: 0 0 8px rgb(2, 2, 2);
+    position: relative;
+    top: -40px;
+    right: -152px;
+    border-radius: 2px
 }

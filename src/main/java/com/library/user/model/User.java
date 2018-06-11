@@ -17,6 +17,33 @@ public class User {
     private Date regTime;
     private String regCityCode;
     private String regCityName;
+    private String phone;
+    private String code;
+    private String emiORpho; //用来接收前台传递过来的登录名，可能是手机号，也可能是邮箱
+
+    public String getEmiORpho() {
+        return emiORpho;
+    }
+
+    public void setEmiORpho(String emiORpho) {
+        this.emiORpho = emiORpho;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
 
     public String getUsername() {
         return username;

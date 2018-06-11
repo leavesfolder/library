@@ -6,6 +6,26 @@ package com.library.util;
 public class ResultModel {
     private boolean status;
     private Object data;
+    private String message;
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public ResultModel(boolean status, String message) {
+        this.status = status;
+        this.message = message;
+    }
+
+    public ResultModel(boolean status, Object data, String message) {
+        this.status = status;
+        this.data = data;
+        this.message = message;
+    }
 
     public ResultModel(Object data) {
         this.data = data;
