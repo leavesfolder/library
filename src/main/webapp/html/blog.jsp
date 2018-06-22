@@ -21,35 +21,17 @@
     <link href="../css/common/icon.css" rel="stylesheet">
     <link href="../css/common/layer.css" rel="stylesheet">
     <link href="../css/common/jquery.alert.css" rel="stylesheet">
-    <link href="../css/common/icon.css" rel="stylesheet">
-    <link href="../css/main.css" rel="stylesheet">
     <link href="../css/blog.css" rel="stylesheet">
     <script type="text/javascript" src="../js/common/jQuery/jquery.min.js"></script>
     <script type="text/javascript" src="../js/common/jQuery/jquery.form.js"></script>
     <script type="text/javascript" src="../js/common/layer.js"></script>
-    <script type="text/javascript" src="../js/common/common_js.js"></script>
-    <script type="text/javascript" src="../js/common/bootstrap/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/common/jQuery/jquery.alert.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/ckeditor/ckeditor.js"></script>
     <script type="text/javascript" src="<%=request.getContextPath()%>/ckfinder/ckfinder.js"></script>
 </head>
 <body>
-    <div class="head">
-       <div class="head_logo"><img src="../img/blog.png"></div>
-        <div class="header-profile">
-            <div class="profile-nav">
-                <span class="profile-username"></span>
-                <a  class="dropdown-toggle" data-toggle="dropdown">
-                    <span class="fa fa-angle-down"></span>
-                </a>
-                <ul class="dropdown-menu animated flipInX pull-right" role="menu">
-                    <li><a href="#"><i class="fa fa-user"></i> 用户中心</a></li>
-                    <li class="divider"></li>
-                    <li><a id="logout" onclick="toLoginOut();" href="#" ><i class="fa fa-sign-out"></i> 退出登录</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
+    <!--引入公用的头文件-->
+    <%@ include file="../common/head.html"%>
     <div class="blogBody all">
         <div class="blogBody ml">
             <div class="pc_top_first">

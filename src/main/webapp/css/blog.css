@@ -1,14 +1,3 @@
-.head{
-    height: 50px;
-    background: #2aabd2;
-    text-align: center;
-}
-.head_logo img{
-    width: 60px;
-    position: absolute;
-    top: 5px;
-    left: 20px;
-}
 .blogBody{
     float: left;
 }
